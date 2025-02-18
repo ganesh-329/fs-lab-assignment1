@@ -1,30 +1,45 @@
 :root {
-    --bg-light: #f9f9f9;
-    --text-light: #333;
-    --bg-dark: #1e1e1e;
-    --text-dark: #fff;
-    --card-bg: #fff;
-    --card-shadow: rgba(0, 0, 0, 0.2);
+    --bg-color: #f9f9f9;
+    --text-color: #333;
+    --card-bg-color: #fff;
+    --card-shadow-color: rgba(0, 0, 0, 0.2);
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg-light: var(--bg-dark);
-        --text-light: var(--text-dark);
-        --card-bg: #2a2a2a;
-        --card-shadow: rgba(255, 255, 255, 0.1);
-    }
+body.dark-mode {
+    --bg-color: #121212;
+    --text-color: white;
+    --card-bg-color: #2a2a2a;
+    --card-shadow-color: rgba(255, 255, 255, 0.1);
 }
 
 body {
-    background-color: var(--bg-light);
-    color: var(--text-light);
+    background-color: var(--bg-color);
+    color: var(--text-color);
     font-family: Arial, sans-serif;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+button {
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+    box-shadow: 0 4px 6px var(--card-shadow-color);
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+    box-shadow: 0 6px 10px var(--card-shadow-color);
 }
 
 .card {
@@ -33,14 +48,14 @@ body {
     width: 100%;
     border-radius: 10px;
     overflow: hidden;
-    background: var(--card-bg);
-    box-shadow: 0 4px 6px var(--card-shadow);
+    background: var(--card-bg-color);
+    box-shadow: 0 4px 6px var(--card-shadow-color);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
     transform: scale(1.05);
-    box-shadow: 0 10px 20px var(--card-shadow);
+    box-shadow: 0 10px 20px var(--card-shadow-color);
 }
 
 .card img {
@@ -54,19 +69,126 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    background: var(--card-bg-color);
 }
 
 .card-content h2 {
     margin: 0;
     font-size: 1.5em;
+    color: var(--text-color);
 }
 
 .card-content p {
     display: none;
     font-size: 1em;
-    color: var(--text-light);
+    color: var(--text-color);
 }
 
 .card:hover .card-content p {
     display: block;
+}
+
+/* Switch styles from Uiverse.io by andrew-demchenk0 */
+.switch {
+    font-size: 17px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: inline-block;
+    width: 64px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #73C0FC;
+    transition: .4s;
+    border-radius: 30px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 30px;
+    width: 30px;
+    border-radius: 20px;
+    left: 2px;
+    bottom: 2px;
+    z-index: 2;
+    background-color: #e8e8e8;
+    transition: .4s;
+}
+
+.sun svg {
+    position: absolute;
+    top: 6px;
+    left: 36px;
+    z-index: 1;
+    width: 24px;
+    height: 24px;
+}
+
+.moon svg {
+    fill: #73C0FC;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    z-index: 1;
+    width: 24px;
+    height: 24px;
+}
+
+.switch:hover .sun svg {
+    animation: rotate 15s linear infinite;
+}
+
+@keyframes rotate {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+}
+
+.switch:hover .moon svg {
+    animation: tilt 5s linear infinite;
+}
+
+@keyframes tilt {
+    0% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(-10deg);
+    }
+    75% {
+      transform: rotate(10deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+}
+
+.input:checked + .slider {
+    background-color: #183153;
+}
+
+.input:focus + .slider {
+    box-shadow: 0 0 1px #183153;
+}
+
+.input:checked + .slider:before {
+    transform: translateX(30px);
 }
